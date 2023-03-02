@@ -47,4 +47,3 @@ async def send_in_background(background_tasks: BackgroundTasks, body: EmailSchem
 
 if __name__ == '__main__':
     uvicorn.run('email:app', port=8000, reload=True)
-    
