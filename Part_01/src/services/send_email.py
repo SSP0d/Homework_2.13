@@ -5,7 +5,7 @@ from fastapi import FastAPI, BackgroundTasks
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
 from pydantic import EmailStr, BaseModel
 
-from src.config import settings
+from src.config.config import settings
 
 
 class EmailSchema(BaseModel):
