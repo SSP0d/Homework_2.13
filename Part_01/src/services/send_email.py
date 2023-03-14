@@ -1,16 +1,11 @@
 from pathlib import Path
 
-import uvicorn
-from fastapi import FastAPI, BackgroundTasks
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
-from pydantic import EmailStr, BaseModel
+from fastapi_mail.errors import ConnectionErrors
+from pydantic import EmailStr
 
 from src.config.config import settings
-
-
-class EmailSchema(BaseModel):
-    email: EmailStr
-
+from src.services.auth import auth_service
 
 conf = ConnectionConfig(
     MAIL_USERNAME=settings.mail_username,
@@ -26,24 +21,18 @@ conf = ConnectionConfig(
     TEMPLATE_FOLDER=Path(__file__).parent / 'templates',
 )
 
-app = FastAPI()
 
+async def send_email(email: EmailStr, username: str, host: str):
+    try:
+        token_verification = auth_service.create_email_token({"sub": email})
+        message = MessageSchema(
+            subject="Confirm your email ",
+            recipients=[email],
+            template_body={"host": host, "username": username, "token": token_verification},
+            subtype=MessageType.html
+        )
 
-@app.post("/send-email")
-async def send_in_background(background_tasks: BackgroundTasks, body: EmailSchema):
-    message = MessageSchema(
-        subject="Fastapi mail module",
-        recipients=[body.email],
-        template_body={"fullname": "Billy Jones"},
-        subtype=MessageType.html
-    )
-
-    fm = FastMail(conf)
-
-    background_tasks.add_task(fm.send_message, message, template_name="example_email.html")
-
-    return {"message": "email has been sent"}
-
-
-if __name__ == '__main__':
-    uvicorn.run('email:app', port=8000, reload=True)
+        fm = FastMail(conf)
+        await fm.send_message(message, template_name="email_template.html")
+    except ConnectionErrors as err:
+        print(err)
