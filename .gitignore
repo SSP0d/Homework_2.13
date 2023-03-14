@@ -158,3 +158,8 @@ cython_debug/
 *.stat
 .DS_Store
 Part_02/.idea/Part_02.iml
+Part_01/postgres-data/pg_stat_tmp/global.tmp
+*.stat
+Part_01/postgres-data/pg_stat_tmp/db_13458.stat
+Part_01/postgres-data/pg_stat_tmp/db_0.stat
+Part_01/postgres-data/pg_stat_tmp/global.stat
