@@ -153,3 +153,5 @@ cython_debug/
 *.stat
 *.stat
 *.xml
+*.xml
+*.stat
