@@ -20,7 +20,6 @@ async def create_user(body: UserModel, db: Session) -> User:
         avatar = g.get_image()
     except Exception as e:
         print(e)
-
     new_user = User(**body.dict(), avatar=avatar)
     db.add(new_user)
     db.commit()
@@ -30,4 +29,10 @@ async def create_user(body: UserModel, db: Session) -> User:
 
 async def update_token(user: User, token: str | None, db: Session) -> None:
     user.refresh_token = token
+    db.commit()
+
+
+async def confirmed_email(email: str, db: Session) -> None:
+    user = await get_user_by_email(email, db)
+    user.confirmed = True
     db.commit()
