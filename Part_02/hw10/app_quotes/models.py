@@ -7,6 +7,7 @@ class Tag(Model):
     def __str__(self):
         return f'{self.name}'
 
+
 class Author(Model):
     fullname = CharField(max_length=50, unique=True)
     born_date = CharField(max_length=10, null=False)
@@ -15,6 +16,7 @@ class Author(Model):
 
     def __str__(self):
         return f'{self.fullname}'
+
 
 class Quote(Model):
     author = ForeignKey(Author, on_delete=CASCADE)
@@ -33,5 +35,3 @@ class Quote(Model):
     def show_tags(self):
         tag = self.tags.all()
         return tag
-
-

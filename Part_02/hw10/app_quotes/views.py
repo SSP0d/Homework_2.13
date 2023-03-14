@@ -6,8 +6,8 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import AuthorForm, QuoteForm
 from .models import Quote, Tag, Author
-from seeds.soup import parse_and_store_data
-from seeds.get_data_from_json import get_authors, get_quotes, get_tags
+from ..seeds.soup import parse_and_store_data
+from ..seeds.get_data_from_json import get_authors, get_quotes, get_tags
 
 
 # Create your views here.
