@@ -1,8 +1,7 @@
 import time
 
-import redis.asyncio as redis
 import uvicorn
-
+import redis.asyncio as redis
 from fastapi import FastAPI, Request, Depends, HTTPException, status
 from fastapi_limiter import FastAPILimiter
 from sqlalchemy import text
