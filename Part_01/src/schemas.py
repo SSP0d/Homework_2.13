@@ -9,7 +9,6 @@ class ContactModel(BaseModel):
     email: EmailStr
     phone: str = Field(min_length=6, max_length=20)
     birthday: date
-    description: str = Field(min_length=3, max_length=250)
 
 
 class ContactResponse(ContactModel):
