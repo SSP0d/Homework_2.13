@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 from starlette.middleware.cors import CORSMiddleware
 
 from src.database.db import get_db
-from src.routes import contacts, auth
+from src.routes import auth, contacts, users
 from src.config.config import settings
 
 
@@ -30,7 +30,7 @@ app.add_middleware(
 
 app.include_router(auth.router, prefix='/api')
 app.include_router(contacts.router, prefix='/api')
-# app.include_router(users.router, prefix='/api')
+app.include_router(users.router, prefix='/api')
 
 
 @app.on_event("startup")
