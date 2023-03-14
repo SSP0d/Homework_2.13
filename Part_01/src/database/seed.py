@@ -1,3 +1,5 @@
+from random import randint
+
 from faker import Faker
 from sqlalchemy.orm import Session
 
@@ -25,20 +27,21 @@ def create_users(data: UserModel, db: Session = database):
 
 
 if __name__ == '__main__':
-    for _ in range(50):
+    for _ in range(100):
         random_contact = ContactModel(
             name=fake.first_name(),
             surname=fake.last_name(),
             email=fake.email(),
             phone=fake.phone_number(),
             birthday=fake.date(),
-            description=fake.text()
+            description=fake.text(),
+            user_id=randint(1, 20)
         )
         create_contacts(data=random_contact, db=database)
 
     for _ in range(20):
         random_user = UserModel(
-            username = fake.first_name(),
-            email = fake.email(),
-            password = fake.password(),
+            username=fake.first_name(),
+            email=fake.email(),
+            password=fake.password(),
         )
